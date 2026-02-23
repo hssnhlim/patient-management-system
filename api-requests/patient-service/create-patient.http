@@ -1,0 +1,13 @@
+### POST request to create patient
+POST http://localhost:4000/patients
+Content-Type: application/json
+
+{
+  "name": "Drake v1",
+  "email": "drake.v1@ovo.com",
+  "address": "123 Main Street",
+  "dateOfBirth": "1987-12-20",
+  "registeredDate": "2025-01-01"
+}
+
+###
