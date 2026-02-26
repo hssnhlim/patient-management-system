@@ -1,34 +1,27 @@
 server:
   port: 4004
 
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.netty: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+
 spring:
   cloud:
     gateway:
-      routes:
-        # REST CLIENT --> http://localhost:4004/api/patients
-        # API GATEWAY --> http://patient-service:4000/patients
-        # PATIENT SERVICE (SPRING BOOT APP) --> /patients --> Patients Array
-        - id: patient-service-route
-          uri: http://patient-service:4000
-          predicates:
-            - Path=/api/patients/**
-          filters:
-            - StripPrefix=1
-
-        # REST CLIENT --> http://localhost:4004/api-docs/patients
-        # API GATEWAY --> http://patient-service:4000/v3/api-docs
-        - id: api-docs-patient-route
-          uri: http://patient-service:4000
-          predicates:
-            - Path=/api-docs/patients
-          filters:
-            - RewritePath=/api-docs/patients,/v3/api-docs
-
-        # REST CLIENT --> http://localhost:4005/api/auth/login
-        # API GATEWAY --> http://auth-service:4005/login
-        - id: auth-service-route
-          uri: http://auth-service:4005
-          predicates:
-            - Path=/api/auth/**
-          filters:
-            - StripPrefix=1
+      # Routes are now defined in ApiGatewayApplication.java for better reliability
+      enabled: true
