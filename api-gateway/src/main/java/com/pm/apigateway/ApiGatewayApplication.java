@@ -25,9 +25,9 @@ public class ApiGatewayApplication {
                 System.out.println("DEBUG: Registering customRouteLocator...");
                 return builder.routes()
                                 // Route for auth-service
-                                // Backend expects /login or /validate, so we strip /api/auth
+                                // Backend expects /auth/login, so we strip /api
                                 .route("auth-service-route", r -> r.path("/api/auth/**")
-                                                .filters(f -> f.stripPrefix(2))
+                                                .filters(f -> f.stripPrefix(1))
                                                 .uri("http://auth-service:4005"))
 
                                 // Route for patient-service
@@ -44,6 +44,11 @@ public class ApiGatewayApplication {
                                 .route("api-docs-patient-route", r -> r.path("/api-docs/patients")
                                                 .filters(f -> f.rewritePath("/api-docs/patients", "/v3/api-docs"))
                                                 .uri("http://patient-service:4000"))
+
+                                .route("api-docs-auth-route", r -> r.path("/api-docs/auth")
+                                                .filters(f -> f.rewritePath("/api-docs/auth", "/v3/api-docs"))
+                                                .uri("http://auth-service:4005"))
+
                                 .build();
         }
 
