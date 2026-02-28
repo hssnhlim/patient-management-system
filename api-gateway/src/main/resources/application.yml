@@ -19,6 +19,9 @@ management:
       enabled: true
     health:
       show-details: always
+auth:
+  service:
+    url: http://auth-service:4005
 
 spring:
   cloud:
